@@ -1,4 +1,4 @@
-# HireCafe
+# Engineering Prep Hub
 
 ## Motivation
 
@@ -15,7 +15,6 @@ This repository aims at providing collated content at a single place to prepare 
 - [Great Python](https://github.com/sounak07/EngineeringPrepHub/blob/main/great_python.md)
 - [Learn Bash and Shell](https://github.com/sounak07/EngineeringPrepHub/blob/main/learn_shell_bash.md)
 - [Interview Experiences](https://github.com/sounak07/EngineeringPrepHub/blob/main/interview_experience.md)
-
 
 ## Contributing
 
