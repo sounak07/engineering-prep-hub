@@ -11,6 +11,7 @@ This repository aims at providing collated content at a single place to prepare 
 - [Low Level Design (OOPS)](https://github.com/sounak07/engineering-pre-hub/blob/main/low_level_design.md)
 - [System Design/High Level Design](https://github.com/sounak07/engineering-pre-hub/blob/main/high_level_design.md)
 - [Awesome FrontEnd](https://github.com/sounak07/engineering-pre-hub/blob/main/front_end_resources.md)
+- [Large Language Model](https://github.com/sounak07/engineering-pre-hub/blob/main/llm.md)
 - [Data structures & Algo](https://github.com/sounak07/engineering-pre-hub/blob/main/ds-algo.md)
 - [Great Python](https://github.com/sounak07/engineering-pre-hub/blob/main/great_python.md)
 - [Learn Bash and Shell](https://github.com/sounak07/engineering-pre-hub/blob/main/learn_shell_bash.md)
