@@ -22,6 +22,7 @@ This repository aims at providing collated content at a single place to prepare 
 - [Behavioral Interviews](#behavioral-interviews)
 - [Learn Go](#learn-go)
 - [SQL](#sql)
+- [Performance Mastery](#performance-mastery)
 - [Operating Systems](#operating-systems)
 
 ---
@@ -190,6 +191,7 @@ This section contains all the DS Algo resources.
 - [Grokking DSA Patterns](https://github.com/dipjul/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions)
 - [Patterns in DP](https://blog.algomaster.io/p/20-patterns-to-master-dynamic-programming)
 - [CodeStoryWithMik DSA](https://www.youtube.com/@codestorywithMIK/playlists)
+- [Thita AI DSA Patterns](https://thita.ai/dsa-patterns-sheet)
 
 ### Practice Sheets
 
@@ -304,6 +306,11 @@ This section contains all the noteworthy interview experiences.
 - [Go by Karan Pratam Singh](https://www.karanpratapsingh.com/courses/go)
 
 ---
+
+## Performance Mastery
+
+- [Performance hints](https://abseil.io/fast/hints.html)
+- [Perf Ninja](https://github.com/dendibakh/perf-ninja)
 
 ## SQL
 
