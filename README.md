@@ -191,15 +191,15 @@ This section contains all the DS Algo resources.
 - [Grokking DSA Patterns](https://github.com/dipjul/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions)
 - [Patterns in DP](https://blog.algomaster.io/p/20-patterns-to-master-dynamic-programming)
 - [CodeStoryWithMik DSA](https://www.youtube.com/@codestorywithMIK/playlists)
-- [Thita AI DSA Patterns](https://thita.ai/dsa-patterns-sheet)
 
 ### Practice Sheets
 
 - [Grind 75](https://www.techinterviewhandbook.org/grind75/?weeks=26&hours=5)
 - [Work@tech](https://workat.tech/problem-solving/practice)
 - [The Only Lists You Need For Your Interview Preparation](https://leetcode.com/discuss/interview-question/2069641/The-Only-Lists-You-Need-For-Your-Interview-Preparation)
+- [Ashish Pratap DSA Patterns](https://algomaster.io/practice/dsa-patterns)
 - [Striver AtoZ](https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/)
-- [Company Wise (\*\*)](https://docs.google.com/spreadsheets/d/1Xs72vSUcMR119L8sCvcbzD4b1yx_t4cd/htmlview#)
+- [Company Wise Problems](https://docs.google.com/spreadsheets/d/1Xs72vSUcMR119L8sCvcbzD4b1yx_t4cd/htmlview#)
 - [Leetcode Patterns](https://seanprashad.com/leetcode-patterns/)
 - [CSES Problem Set](https://cses.fi/problemset/)
 - [List of questions sorted by common patterns](https://leetcode.com/discuss/interview-question/448285/List-of-questions-sorted-by-common-patterns)
@@ -207,6 +207,7 @@ This section contains all the DS Algo resources.
 - [Leetcode Questions Sorted by Vote Count](https://leetcode.com/discuss/general-discussion/462981/leetcode-questions-sorted-by-vote-count-updated)
 - [Company wise github Repo](https://github.com/liquidslr/leetcode-company-wise-problems/tree/main)
 - [Company Wise (Leetcodewizard)](https://leetcodewizard.io/problem-database)
+- [Thita AI DSA Patterns](https://thita.ai/dsa-patterns-sheet)
 
 ### Graph
 
@@ -297,7 +298,7 @@ This section contains all the noteworthy interview experiences.
 
 ## Behavioral Interviews
 
-- [Ashish Pratap's Repo](https://github.com/ashishps1/awesome-behavioral-interviews)
+- [Ashish Pratap's Behavioral](https://algomaster.io/learn/behavioral/what-are-behavioral-interviews)
 
 ---
 
