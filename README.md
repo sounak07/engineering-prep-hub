@@ -186,19 +186,21 @@ This section contains all the DS Algo resources.
 - [10 line substring solving template](https://leetcode.com/problems/minimum-window-substring/solutions/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems/)
 - [MIT - Intro to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP63EdVPNLG3ToM6LaEUuStEY)
 - [Grokking DSA Patterns](https://github.com/dipjul/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions)
-- [DSA Patterns](https://algomaster.io/practice/dsa-patterns)
 - [Cracking FAANG DSA](https://www.youtube.com/@crackfaang/playlists)
-- [Grokking DSA Patterns](https://github.com/dipjul/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions)
 - [Patterns in DP](https://blog.algomaster.io/p/20-patterns-to-master-dynamic-programming)
 - [CodeStoryWithMik DSA](https://www.youtube.com/@codestorywithMIK/playlists)
 
 ### Practice Sheets
 
-- [Grind 75](https://www.techinterviewhandbook.org/grind75/?weeks=26&hours=5)
-- [Work@tech](https://workat.tech/problem-solving/practice)
-- [The Only Lists You Need For Your Interview Preparation](https://leetcode.com/discuss/interview-question/2069641/The-Only-Lists-You-Need-For-Your-Interview-Preparation)
 - [Ashish Pratap DSA Patterns](https://algomaster.io/practice/dsa-patterns)
+- [Thita AI DSA Patterns](https://thita.ai/dsa-patterns-sheet)
+- [Neetcode 250 Patterns](https://neetcode.io/practice/practice/neetcode250)
+- [Grind 75 Practice Random](https://www.techinterviewhandbook.org/grind75)
+- [The Only Lists You Need For Your Interview Preparation (Problem by Patterns)](https://leetcode.com/discuss/interview-question/2069641/The-Only-Lists-You-Need-For-Your-Interview-Preparation)
+- [Grind 148 (5 hr/week)](https://www.techinterviewhandbook.org/grind75/?weeks=26&hours=5)
 - [Striver AtoZ](https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/)
+- [Work@tech](https://workat.tech/problem-solving/practice)
+- [Grokking DSA Patterns Problems Repo](https://github.com/dipjul/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions)
 - [Company Wise Problems](https://docs.google.com/spreadsheets/d/1Xs72vSUcMR119L8sCvcbzD4b1yx_t4cd/htmlview#)
 - [Leetcode Patterns](https://seanprashad.com/leetcode-patterns/)
 - [CSES Problem Set](https://cses.fi/problemset/)
@@ -207,7 +209,6 @@ This section contains all the DS Algo resources.
 - [Leetcode Questions Sorted by Vote Count](https://leetcode.com/discuss/general-discussion/462981/leetcode-questions-sorted-by-vote-count-updated)
 - [Company wise github Repo](https://github.com/liquidslr/leetcode-company-wise-problems/tree/main)
 - [Company Wise (Leetcodewizard)](https://leetcodewizard.io/problem-database)
-- [Thita AI DSA Patterns](https://thita.ai/dsa-patterns-sheet)
 
 ### Graph
 
