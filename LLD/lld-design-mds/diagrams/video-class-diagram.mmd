@@ -1,0 +1,47 @@
+classDiagram
+    direction TB
+    class VideoController {
+        +save_video(request) SaveVideoResponse
+        +fetch_video(video_id) VideoView
+        +watch_video(request) WatchVideoResponse
+    }
+    class VideoService {
+        +save_video(uploader_id, title, description, video_url) Video
+        +fetch_video(video_id) Video
+        +watch_video(uploader_id, title) Video
+    }
+    class VideoRepository {
+        <<interface>>
+        +save(video) Video
+        +find_by_id(video_id) Video
+        +find_by_uploader_and_title(uploader_id, title) Video
+        +increment_view_count(video_id) int
+    }
+    class SqlVideoRepository {
+        +save(video) Video
+        +find_by_id(video_id) Video
+        +find_by_uploader_and_title(uploader_id, title) Video
+        +increment_view_count(video_id) int
+    }
+    class UserRepository {
+        <<interface>>
+        +exists(user_id) bool
+    }
+    class Video {
+        -str video_id
+        -str uploader_id
+        -str title
+        -str description
+        -str video_url
+        -int view_count
+        -datetime upload_date
+    }
+    class UrlValidator {
+        +is_valid(url) bool
+    }
+    VideoController --> VideoService
+    VideoService --> VideoRepository
+    VideoService --> UserRepository
+    VideoService --> UrlValidator
+    VideoRepository <|.. SqlVideoRepository
+    VideoService --> Video

@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> PENDING : send()
+
+    PENDING --> SENT : delivery success
+    PENDING --> FAILED : delivery error
+
+    FAILED --> PENDING : retry if attempts remaining
+    FAILED --> [*] : max retries exceeded
+
+    SENT --> [*]

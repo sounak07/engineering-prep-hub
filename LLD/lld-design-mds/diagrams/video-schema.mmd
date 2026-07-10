@@ -1,0 +1,20 @@
+erDiagram
+    USERS ||--o{ VIDEOS : uploads
+
+    USERS {
+        uuid user_id PK
+        varchar name
+        timestamp created_at
+    }
+
+    VIDEOS {
+        uuid video_id PK
+        uuid uploader_id FK
+        varchar title
+        text description
+        varchar video_url
+        bigint view_count
+        timestamp upload_date
+        timestamp created_at
+        timestamp updated_at
+    }

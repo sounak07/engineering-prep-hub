@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> STOPPED : initial
+
+    STOPPED --> PLAYING : play(song)
+
+    PLAYING --> PAUSED : pause()
+    PAUSED --> PLAYING : resume()
+
+    PLAYING --> PLAYING : skip() with next in queue
+    PLAYING --> STOPPED : skip() on empty queue
+
+    PAUSED --> STOPPED : skip() on empty queue
+
+    PLAYING --> STOPPED : song ends, queue empty

@@ -1,0 +1,97 @@
+classDiagram
+    direction TB
+
+    class MessageService {
+        +send(request) SendResponse
+        +registerReceiver(config) ReceiverView
+        +getMessage(messageId) MessageView
+    }
+
+    class PushDispatcher {
+        +dispatch(message) DeliveryResult
+    }
+
+    class Message {
+        -String messageId
+        -String recipientId
+        -MessageFormat format
+        -String payload
+        -MessageStatus status
+        -int attemptCount
+        +markSent() void
+        +markFailed() void
+        +toView() MessageView
+    }
+
+    class Receiver {
+        -String recipientId
+        -DeliveryChannelType channelType
+        -String endpoint
+        +canDeliver() boolean
+    }
+
+    class DeliveryChannel {
+        <<interface>>
+        +deliver(message, receiver) DeliveryResult
+        +supports(channelType) boolean
+    }
+
+    class QueueDeliveryChannel {
+        +deliver(message, receiver) DeliveryResult
+        +supports(channelType) boolean
+    }
+
+    class HttpDeliveryChannel {
+        +deliver(message, receiver) DeliveryResult
+        +supports(channelType) boolean
+    }
+
+    class RpcDeliveryChannel {
+        +deliver(message, receiver) DeliveryResult
+        +supports(channelType) boolean
+    }
+
+    class MessageSerializer {
+        <<interface>>
+        +serialize(payload, format) String
+        +supports(format) boolean
+    }
+
+    class JsonMessageSerializer {
+        +serialize(payload, format) String
+        +supports(format) boolean
+    }
+
+    class MessageFormat {
+        <<enumeration>>
+        JSON
+        XML
+        PLAIN_TEXT
+    }
+
+    class DeliveryChannelType {
+        <<enumeration>>
+        QUEUE
+        HTTP
+        RPC
+    }
+
+    class MessageStatus {
+        <<enumeration>>
+        PENDING
+        SENT
+        FAILED
+    }
+
+    MessageService --> PushDispatcher
+    MessageService --> Message : manages
+    MessageService --> Receiver : registry
+    PushDispatcher --> DeliveryChannel
+    PushDispatcher --> MessageSerializer
+    DeliveryChannel <|.. QueueDeliveryChannel
+    DeliveryChannel <|.. HttpDeliveryChannel
+    DeliveryChannel <|.. RpcDeliveryChannel
+    MessageSerializer <|.. JsonMessageSerializer
+    Message --> MessageFormat
+    Receiver --> DeliveryChannelType
+    Message --> MessageStatus

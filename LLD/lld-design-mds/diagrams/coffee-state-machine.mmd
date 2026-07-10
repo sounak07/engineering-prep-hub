@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> IDLE
+    IDLE --> SELECTED : select_drink()
+    SELECTED --> PAYMENT_PENDING : price > balance
+    PAYMENT_PENDING --> DISPENSING : balance >= price
+    SELECTED --> DISPENSING : balance already sufficient
+    DISPENSING --> IDLE : dispense complete
+    SELECTED --> IDLE : cancel()
+    PAYMENT_PENDING --> IDLE : cancel() refund

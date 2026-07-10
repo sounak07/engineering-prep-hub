@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant C as Client
+    participant API as VideoController
+    participant S as VideoService
+    participant R as VideoRepository
+    participant DB as Database
+
+    Note over C,DB: Save Video — POST /api/videos
+    C->>API: save_video(uploaderId, title, description, videoUrl)
+    API->>S: save_video(...)
+    S->>S: validate URL + fields
+    S->>R: find_by_uploader_and_title()
+    R->>DB: SELECT
+    S->>R: save(video)
+    R->>DB: INSERT
+    API-->>C: 201 videoId, uploadDate
+
+    Note over C,DB: Fetch Video — GET /api/videos/{videoId}
+    C->>API: fetch_video(videoId)
+    API->>S: fetch_video(videoId)
+    S->>R: find_by_id(videoId)
+    R->>DB: SELECT
+    API-->>C: 200 title, description, videoUrl, viewCount
+
+    Note over C,DB: Watch Video — POST /api/videos/watch
+    C->>API: watch_video(uploaderId, title)
+    API->>S: watch_video(...)
+    S->>R: find_by_uploader_and_title()
+    R->>DB: SELECT
+    S->>R: increment_view_count(videoId)
+    R->>DB: UPDATE view_count = view_count + 1
+    API-->>C: 200 videoId, viewCount

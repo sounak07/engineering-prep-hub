@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant T as Table
+    participant L as RWLock
+    participant RS as RowStore
+    participant IM as IndexManager
+    participant IX as HashIndex
+
+    Note over T,IX: insert — write lock
+    T->>L: acquire_write()
+    T->>RS: append(row) → row_id
+    T->>IM: on_insert(row_id, row)
+    IM->>IX: insert_entry(row_id, row)
+    T->>L: release_write()
+
+    Note over T,IX: select with index — read lock
+    T->>L: acquire_read()
+    T->>IM: find_usable_index(predicate)
+    IM-->>T: HashIndex on column
+    T->>IX: lookup(predicate) → row_ids
+    T->>RS: get(row_id) for each
+    T->>L: release_read()
+
+    Note over T,IX: create_index — write lock
+    T->>L: acquire_write()
+    T->>IM: create_index(def)
+    IM->>IX: build from full scan of RowStore
+    T->>L: release_write()

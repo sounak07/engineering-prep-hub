@@ -1,0 +1,41 @@
+classDiagram
+    direction TB
+    class BookingService {
+        +search_shows(movie_id, city)
+        +lock_seats(show_id, seat_ids, user_id)
+        +confirm_booking(lock_id, payment)
+        +cancel_booking(booking_id)
+    }
+    class Show {
+        -str show_id
+        -datetime start_time
+        -Screen screen
+        -list seats
+    }
+    class Seat {
+        -str seat_id
+        -SeatStatus status
+        -SeatType type
+    }
+    class Booking {
+        -str booking_id
+        -str user_id
+        -list seat_ids
+        -BookingStatus status
+    }
+    class SeatLock {
+        -str lock_id
+        -datetime expires_at
+    }
+    class SeatStatus {
+        <<enumeration>>
+        AVAILABLE LOCKED BOOKED
+    }
+  class BookingStatus {
+        <<enumeration>>
+        PENDING CONFIRMED CANCELLED
+    }
+    BookingService --> Show
+    BookingService --> Booking
+    Show o-- Seat
+    Booking --> SeatLock

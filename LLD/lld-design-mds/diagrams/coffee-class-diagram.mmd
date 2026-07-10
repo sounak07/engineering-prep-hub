@@ -1,0 +1,67 @@
+classDiagram
+    direction TB
+    class VendingMachineService {
+        +select_drink(drink_id, add_ons)
+        +insert_coin(amount)
+        +dispense()
+        +cancel()
+    }
+    class VendingMachine {
+        -MachineState state
+        -Drink selected_drink
+        -float balance
+        +select(drink)
+        +add_payment(amount)
+        +dispense()
+    }
+    class Inventory {
+        -dict ingredients
+        +has_ingredients(recipe) bool
+        +consume(recipe) void
+    }
+    class Drink {
+        <<interface>>
+        +drink_id() str
+        +price() float
+        +recipe() dict
+    }
+    class Espresso
+    class Latte
+    class DrinkDecorator {
+        <<abstract>>
+        -Drink wrapped
+        +price() float
+        +recipe() dict
+    }
+    class ExtraShotDecorator
+    class CaramelDecorator
+    class DrinkFactory {
+        +create(drink_type) Drink
+    }
+    class AddonFactory {
+        +wrap(addon_id, drink) Drink
+    }
+    class PaymentProcessor {
+        +accept(amount) void
+        +refund(amount) void
+    }
+    class MachineState {
+        <<enumeration>>
+        IDLE
+        SELECTED
+        PAYMENT_PENDING
+        DISPENSING
+    }
+    VendingMachineService --> VendingMachine
+    VendingMachine --> Inventory
+    VendingMachine --> PaymentProcessor
+    VendingMachineService --> DrinkFactory
+    VendingMachineService --> AddonFactory
+    Drink <|.. Espresso
+    Drink <|.. Latte
+    Drink <|.. DrinkDecorator
+    DrinkDecorator <|-- ExtraShotDecorator
+    DrinkDecorator <|-- CaramelDecorator
+    DrinkDecorator o--> Drink : wraps
+    DrinkFactory ..> Drink
+    AddonFactory ..> DrinkDecorator

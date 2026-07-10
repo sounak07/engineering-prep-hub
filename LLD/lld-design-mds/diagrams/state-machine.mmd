@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> WAITING : createGame()
+
+    WAITING --> IN_PROGRESS : joinGame(player2)
+
+    IN_PROGRESS --> WON : move, win detected
+    IN_PROGRESS --> DRAW : move, board full
+
+    WON --> [*]
+    DRAW --> [*]

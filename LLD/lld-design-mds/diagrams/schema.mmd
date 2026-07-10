@@ -1,0 +1,25 @@
+erDiagram
+    GAMES ||--o{ MOVES : has
+
+    GAMES {
+        uuid id PK
+        varchar status
+        uuid player1_id
+        uuid player2_id
+        uuid current_turn_player_id
+        uuid winner_id
+        json board
+        int move_count
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    MOVES {
+        uuid id PK
+        uuid game_id FK
+        uuid player_id
+        int row
+        int col
+        int move_number
+        timestamp created_at
+    }

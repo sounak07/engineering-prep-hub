@@ -41,6 +41,24 @@ This section contains all the low level system design resources.
 - [Design a Parking lot](https://github.com/sounak07/engineering-prep-hub/blob/main/LLD/Interview-questions/parking-lot.py)
 - [Design a hash map](https://github.com/sounak07/engineering-prep-hub/blob/main/LLD/Interview-questions/hash_maps.py)
 
+### Interview Questions (Observe.AI)
+
+- [Tic-Tac-Toe Multiplayer LLD (1-hour scope)](LLD/lld-design-mds/tic-tac-toe-multiplayer.md)
+- [Push Messaging System LLD (1-hour scope)](LLD/lld-design-mds/messaging-system.md)
+- [E-Commerce Coupon System LLD (1-hour scope)](LLD/lld-design-mds/coupon-system.md)
+- [Spotify-Like Music App LLD (1-hour scope)](LLD/lld-design-mds/spotify-music-system.md)
+
+### Classic LLD Problems (1-hour scope)
+
+- [Coffee Vending Machine](LLD/lld-design-mds/coffee-vending-machine.md)
+- [Traffic Signal System](LLD/lld-design-mds/traffic-signal.md)
+- [Logger Manager](LLD/lld-design-mds/logger-manager.md)
+- [Splitwise](LLD/lld-design-mds/splitwise.md)
+- [Movie Ticket Booking](LLD/lld-design-mds/movie-booking.md)
+- [Cricinfo / Cricket Scoring](LLD/lld-design-mds/cricinfo.md)
+- [Video Sharing Platform (API + SQL)](LLD/lld-design-mds/video-sharing-platform.md)
+- [In-Memory SQL Engine (Machine Coding)](LLD/lld-design-mds/sql-machine-coding.md)
+
 ### OOP Patterns
 
 - [Abstract Factory](https://github.com/sounak07/engineering-prep-hub/blob/main/LLD/patterns/abstract_factory.py)
@@ -70,6 +88,15 @@ This section contains all the low level system design resources.
 ## High Level System Design
 
 This section contains all the high level system design resources.
+
+### Interview Questions (Observe.AI)
+
+- [Call Ingestion & Processing System](HLD/hld-design-mds/call-ingestion-processing.md)
+- [Real-Time Contact Center Intelligence](HLD/hld-design-mds/realtime-contact-center-intelligence.md)
+
+### Interview Questions (SDE-3 / SaaS)
+
+- [AI Code Reviewer as SaaS](HLD/hld-design-mds/ai-code-reviewer-saas.md)
 
 ### Resource Hub System Design (Free)
 
@@ -340,6 +367,8 @@ This section contains all the Python related resources.
 ## SQL
 
 - [Leetcode SQL](https://leetcode.com/studyplan/top-sql-50/)
+- [Video Sharing Platform — API + SQL LLD](LLD/lld-design-mds/video-sharing-platform.md)
+- [In-Memory SQL Engine — Machine Coding LLD](LLD/lld-design-mds/sql-machine-coding.md)
 
 ---
 

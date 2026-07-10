@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant C as Client
+    participant CS as CouponService
+    participant CF as CouponFactory
+    participant CP as Coupon
+    participant CR as CouponRule
+
+    Note over C,CR: Coupon creation
+    C->>CS: createCoupon(type, config, ruleIds)
+    CS->>CF: create(type, config, ruleIds)
+    CF->>CF: load shared rules by ruleIds
+    CF-->>CS: Coupon with attached rules
+
+    Note over C,CR: Get applicable coupons
+    C->>CS: getApplicableCoupons(cart)
+    CS->>CS: load all active coupons
+
+    loop each coupon
+        CS->>CP: isApplicable(cart)
+        loop each CouponRule on coupon
+            CP->>CR: isApplicable(cart)
+        end
+        alt all rules pass
+            CS->>CP: calculateDiscount(cart)
+            CS->>CS: build ApplicableCoupon
+        end
+    end
+
+    CS-->>C: sorted by estimatedDiscount desc

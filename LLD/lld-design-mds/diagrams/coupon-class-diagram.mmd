@@ -1,0 +1,119 @@
+classDiagram
+    direction TB
+
+    class CouponService {
+        +getApplicableCoupons(cart) List~ApplicableCoupon~
+        +createCoupon(request) Coupon
+    }
+
+    class Coupon {
+        <<interface>>
+        +getCouponId() String
+        +getCode() String
+        +getType() CouponType
+        +getRules() List~CouponRule~
+        +isApplicable(cart) boolean
+        +calculateDiscount(cart) double
+    }
+
+    class BaseCoupon {
+        <<abstract>>
+        #List~CouponRule~ rules
+        +isApplicable(cart) boolean
+        +getRules() List~CouponRule~
+        +calculateDiscount(cart) double
+    }
+
+    class PercentageCoupon {
+        -double percent
+        -double maxCap
+        +calculateDiscount(cart) double
+    }
+
+    class FlatDiscountCoupon {
+        -double amount
+        +calculateDiscount(cart) double
+    }
+
+    class CategoryPercentageCoupon {
+        -String categoryId
+        -double percent
+        +calculateDiscount(cart) double
+    }
+
+    class FreeShippingCoupon {
+        -double shippingFee
+        +calculateDiscount(cart) double
+    }
+
+    class CouponRule {
+        <<interface>>
+        +isApplicable(cart) boolean
+        +getRuleType() RuleType
+    }
+
+    class MinCartValueRule {
+        -double minValue
+        +isApplicable(cart) boolean
+    }
+
+    class CategoryRule {
+        -String categoryId
+        +isApplicable(cart) boolean
+    }
+
+    class ExpiryRule {
+        -Instant expiryAt
+        +isApplicable(cart) boolean
+    }
+
+    class UsageLimitRule {
+        -int maxUses
+        -int currentUses
+        +isApplicable(cart) boolean
+    }
+
+    class CouponFactory {
+        +create(type, config, rules) Coupon
+        +buildRule(ruleRecord) CouponRule
+    }
+
+    class RuleFactory {
+        +fromRecord(record) CouponRule
+    }
+
+    class Cart {
+        -List~CartItem~ items
+        +getSubtotal() double
+        +containsCategory(categoryId) boolean
+    }
+
+    class CartItem {
+        -String categoryId
+        -int quantity
+        -double unitPrice
+    }
+
+    class ApplicableCoupon {
+        -String couponId
+        -String code
+        -CouponType type
+        -double estimatedDiscount
+    }
+
+    CouponService --> CouponFactory
+    CouponService --> Coupon
+    CouponFactory --> RuleFactory
+    CouponFactory ..> Coupon : creates
+    RuleFactory ..> CouponRule : creates
+    Coupon <|.. BaseCoupon
+    BaseCoupon <|-- PercentageCoupon
+    BaseCoupon <|-- FlatDiscountCoupon
+    BaseCoupon <|-- CategoryPercentageCoupon
+    BaseCoupon <|-- FreeShippingCoupon
+    BaseCoupon o-- CouponRule
+    CouponRule <|.. MinCartValueRule
+    CouponRule <|.. CategoryRule
+    CouponRule <|.. ExpiryRule
+    CouponRule <|.. UsageLimitRule
+    Cart *-- CartItem

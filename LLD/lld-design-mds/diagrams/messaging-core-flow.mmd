@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant C as Client
+    participant MS as MessageService
+    participant PD as PushDispatcher
+    participant R as ReceiverRegistry
+    participant SER as MessageSerializer
+    participant CH as DeliveryChannel
+
+    C->>MS: send(payload, recipientId, format)
+    MS->>MS: create Message(PENDING)
+    MS->>PD: dispatch(message)
+
+    PD->>R: get(recipientId)
+    R-->>PD: Receiver(channelType, endpoint)
+
+    PD->>SER: serialize(payload, format)
+    SER-->>PD: serialized body
+
+    PD->>CH: deliver(message, receiver)
+    CH-->>PD: DeliveryResult
+
+    alt success
+        PD-->>MS: SENT
+        MS->>MS: message.markSent()
+    else failure
+        PD-->>MS: FAILED
+        MS->>MS: message.markFailed()
+    end
+
+    MS-->>C: SendResponse(messageId, status)

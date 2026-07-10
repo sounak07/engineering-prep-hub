@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> EVALUATING : getApplicableCoupons()
+
+    EVALUATING --> APPLICABLE : all rules pass and not expired
+    EVALUATING --> NOT_APPLICABLE : any rule fails or expired
+
+    APPLICABLE --> [*]
+    NOT_APPLICABLE --> [*]

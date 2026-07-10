@@ -1,0 +1,106 @@
+classDiagram
+    direction TB
+
+    class MusicService {
+        +createPlaylist(userId, name) PlaylistView
+        +addSongToPlaylist(playlistId, songId) void
+        +play(userId, songId, playlistId) PlaybackView
+        +pause(userId) PlaybackView
+        +resume(userId) PlaybackView
+        +skip(userId) PlaybackView
+        +search(query) List~SongView~
+        +getPlaybackState(userId) PlaybackView
+    }
+
+    class Playlist {
+        -String playlistId
+        -String ownerId
+        -String name
+        -List~PlaylistEntry~ entries
+        +addSong(song) void
+        +removeSong(songId) void
+        +isEmpty() boolean
+        +getSongIds() List~String~
+    }
+
+    class PlaylistEntry {
+        -String songId
+        -int position
+    }
+
+    class Song {
+        -String songId
+        -String title
+        -String artistName
+        -int durationSeconds
+    }
+
+    class Player {
+        -String userId
+        -Song currentSong
+        -PlayerState state
+        -int positionSeconds
+        -PlaybackQueue queue
+        -PlaybackStrategy strategy
+        +play(song) void
+        +pause() void
+        +resume() void
+        +skip() Song
+        +getState() PlaybackView
+    }
+
+    class PlaybackQueue {
+        -Deque~Song~ upcoming
+        +enqueue(song) void
+        +enqueueAll(songs) void
+        +pollNext() Song
+        +isEmpty() boolean
+        +remove(songId) void
+    }
+
+    class PlaybackStrategy {
+        <<interface>>
+        +buildQueue(songs, startSongId) List~Song~
+        +next(current, remaining) Song
+    }
+
+    class SequentialStrategy {
+        +buildQueue(songs, startSongId) List~Song~
+        +next(current, remaining) Song
+    }
+
+    class ShuffleStrategy {
+        +buildQueue(songs, startSongId) List~Song~
+        +next(current, remaining) Song
+    }
+
+    class SubscriptionService {
+        +canSkip(userId) boolean
+        +recordSkip(userId) void
+        +getPlan(userId) SubscriptionPlan
+    }
+
+    class PlayerState {
+        <<enumeration>>
+        STOPPED
+        PLAYING
+        PAUSED
+    }
+
+    class SubscriptionPlan {
+        <<enumeration>>
+        FREE
+        PREMIUM
+    }
+
+    MusicService --> Playlist
+    MusicService --> Player
+    MusicService --> SubscriptionService
+    MusicService --> Song
+    Playlist o-- PlaylistEntry
+    Player *-- PlaybackQueue
+    Player --> PlaybackStrategy
+    Player --> PlayerState
+    PlaybackStrategy <|.. SequentialStrategy
+    PlaybackStrategy <|.. ShuffleStrategy
+    SubscriptionService --> SubscriptionPlan

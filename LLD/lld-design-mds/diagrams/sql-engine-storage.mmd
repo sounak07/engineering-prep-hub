@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph PrimaryStorage["Primary storage — RowStore"]
+        R["rows: dict[int, Row]<br/>row_id → column values"]
+        N["next_row_id: int<br/>monotonic auto-increment"]
+    end
+
+    subgraph IndexStorage["Secondary storage — IndexManager"]
+        H["HashIndex<br/>dict[Value, set[row_id]]"]
+        M["index metadata<br/>column(s), type, name"]
+    end
+
+    subgraph Concurrency["Concurrency — per Table"]
+        L["RWLock<br/>shared reads / exclusive writes"]
+    end
+
+    INSERT["insert(row)"] --> L
+    L --> R
+    L --> H
+    SELECT["select(predicate)"] --> L
+    L --> PLAN{index usable?}
+    PLAN -->|yes| H
+    PLAN -->|no| R
+    H --> R

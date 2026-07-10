@@ -1,0 +1,37 @@
+classDiagram
+    direction TB
+    class Logger {
+        -str name
+        -LogLevel level
+        -list handlers
+        +log(level, message)
+        +add_handler(handler)
+    }
+    class LogHandler {
+        <<interface>>
+        +handle(record) void
+        +supports(level) bool
+    }
+    class ConsoleHandler
+    class FileHandler
+    class LogFormatter {
+        <<interface>>
+        +format(record) str
+    }
+    class JsonFormatter
+    class LogRecord {
+        -LogLevel level
+        -str message
+        -datetime timestamp
+        -str logger_name
+    }
+    class LogLevel {
+        <<enumeration>>
+        DEBUG INFO WARN ERROR
+    }
+    Logger o-- LogHandler
+    Logger --> LogRecord
+    LogHandler --> LogFormatter
+    LogHandler <|.. ConsoleHandler
+    LogHandler <|.. FileHandler
+    LogFormatter <|.. JsonFormatter

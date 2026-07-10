@@ -1,0 +1,41 @@
+erDiagram
+    USERS ||--o{ PLAYLISTS : owns
+    PLAYLISTS ||--o{ PLAYLIST_SONGS : contains
+    SONGS ||--o{ PLAYLIST_SONGS : in
+    USERS ||--|| USER_SUBSCRIPTIONS : has
+
+    USERS {
+        uuid user_id PK
+        varchar display_name
+        timestamp created_at
+    }
+
+    SONGS {
+        uuid song_id PK
+        varchar title
+        varchar artist_name
+        int duration_seconds
+        timestamp created_at
+    }
+
+    PLAYLISTS {
+        uuid playlist_id PK
+        uuid owner_id FK
+        varchar name
+        boolean is_public
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PLAYLIST_SONGS {
+        uuid playlist_id FK
+        uuid song_id FK
+        int position
+    }
+
+    USER_SUBSCRIPTIONS {
+        uuid user_id PK
+        varchar plan
+        int skips_used_this_hour
+        timestamp skip_window_start
+    }

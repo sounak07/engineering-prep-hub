@@ -1,0 +1,45 @@
+sequenceDiagram
+    participant Client as Contact Center / SDK
+    participant API as Ingestion API
+    participant S3 as S3
+    participant EB as EventBridge / SNS
+    participant PG as Postgres
+    participant K as Kafka
+    participant V as Upload Validator
+    participant W as ASR / Enrich / Index
+    participant M as MongoDB
+    participant ES as Elasticsearch
+    participant R as Redis
+
+    Note over Client,R: Happy path — S3 completion triggers pipeline (no client POST /complete)
+
+    Client->>API: POST /v1/calls (+ Idempotency-Key)
+    API->>PG: INSERT call INITIATED + multipart_upload_id
+    API-->>Client: 201 call_id + presigned part URLs
+
+    loop Multipart parts (client → S3 only)
+        Client->>S3: PUT part (presigned)
+        S3-->>Client: 200
+    end
+
+    Client->>S3: CompleteMultipartUpload
+    Note over Client: Client is done — no API callback required
+
+    S3->>EB: Object / multipart complete event
+    EB->>K: publish call.object.ready
+    K->>V: consume call.object.ready
+    V->>PG: status=UPLOAD_COMPLETE → PROCESSING
+    V->>S3: HeadObject / verify size + key prefix
+    alt Invalid object
+        V->>PG: status=FAILED
+        V->>K: DLQ / failed
+    else Valid
+        V->>K: publish call.validated
+        K->>W: ASR → Enrich → Index
+        W->>S3: get audio
+        W->>M: upsert transcript + enrichment
+        W->>ES: upsert SearchDocument
+        W->>PG: status=INDEXED
+        W->>K: processing.status
+        K->>R: cache status
+    end

@@ -1,0 +1,75 @@
+classDiagram
+    direction TB
+
+    class GameService {
+        +createGame(player1Id) GameView
+        +joinGame(gameId, player2Id) GameView
+        +makeMove(gameId, playerId, row, col) MoveResponse
+        +getGame(gameId) GameView
+    }
+
+    class Game {
+        -String gameId
+        -Player player1
+        -Player player2
+        -Board board
+        -String currentTurnPlayerId
+        -GameStatus status
+        -String winnerId
+        -List~Move~ moves
+        +join(player2Id) void
+        +makeMove(playerId, row, col) MoveResponse
+        +toView() GameView
+    }
+
+    class Board {
+        -Symbol[][] grid
+        -WinStrategy winStrategy
+        +place(row, col, symbol) void
+        +isEmpty(row, col) boolean
+        +isFull() boolean
+        +checkWin(lastRow, lastCol, symbol) boolean
+    }
+
+    class Player {
+        -String playerId
+        -Symbol symbol
+    }
+
+    class Move {
+        -String playerId
+        -int row
+        -int col
+        -int moveNumber
+    }
+
+    class WinStrategy {
+        <<interface>>
+        +isWin(grid, row, col, symbol) boolean
+    }
+
+    class ThreeInRowWinStrategy {
+        +isWin(grid, row, col, symbol) boolean
+    }
+
+    class GameStatus {
+        <<enumeration>>
+        WAITING
+        IN_PROGRESS
+        WON
+        DRAW
+    }
+
+    class Symbol {
+        <<enumeration>>
+        EMPTY
+        X
+        O
+    }
+
+    GameService --> Game : manages
+    Game *-- Board
+    Game *-- Player : 2
+    Game o-- Move : history
+    Board --> WinStrategy
+    WinStrategy <|.. ThreeInRowWinStrategy

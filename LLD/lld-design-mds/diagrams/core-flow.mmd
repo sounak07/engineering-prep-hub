@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant P1 as Player1
+    participant S as GameService
+    participant G as Game
+
+    P1->>S: createGame(p1)
+    S->>G: new Game(WAITING)
+    S-->>P1: gameId
+
+    Note over P1,G: Player2 joins
+    P1->>S: joinGame(gameId, p2)
+    S->>G: join(p2)
+    G-->>S: IN_PROGRESS
+    S-->>P1: GameView
+
+    Note over P1,G: Alternate moves
+    P1->>S: makeMove(gameId, p1, r, c)
+    S->>G: makeMove(...)
+    G->>G: validate, place, win/draw/turn
+    S-->>P1: MoveResponse

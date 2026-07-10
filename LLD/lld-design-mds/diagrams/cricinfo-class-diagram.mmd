@@ -1,0 +1,55 @@
+classDiagram
+    direction TB
+    class MatchService {
+        +start_match(request)
+        +record_ball(match_id, ball_event)
+        +get_scorecard(match_id)
+        +subscribe(match_id, observer)
+    }
+    class Match {
+        -Team team_a
+        -Team team_b
+        -Innings current_innings
+        -list~MatchObserver~ observers
+        +record_ball(event) Ball
+        +build_scorecard() Scorecard
+        +handle_innings_end()
+    }
+    class Innings {
+        -Team batting_team
+        -int runs
+        -int wickets
+        -int legal_balls
+        -list~Ball~ balls
+        +apply_ball(event) Ball
+        +overs_display() str
+        +is_complete() bool
+    }
+    class Ball {
+        -int over_number
+        -int ball_in_over
+        -int runs_off_bat
+        -ExtraType extra_type
+        -bool is_wicket
+    }
+    class Team {
+        -str team_id
+        -str name
+    }
+    class Scorecard {
+        +to_view() dict
+    }
+    class MatchObserver {
+        <<interface>>
+        +on_ball_update(event)
+    }
+    class LiveScoreNotifier {
+        +on_ball_update(event)
+    }
+    MatchService --> Match
+    Match *-- Innings
+    Match --> Team
+    Innings o-- Ball
+    Match --> Scorecard
+    Match o-- MatchObserver
+    MatchObserver <|.. LiveScoreNotifier

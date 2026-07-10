@@ -1,0 +1,22 @@
+erDiagram
+    RECEIVERS ||--o{ MESSAGES : receives
+
+    RECEIVERS {
+        uuid recipient_id PK
+        varchar channel_type
+        varchar endpoint
+        boolean active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    MESSAGES {
+        uuid message_id PK
+        uuid recipient_id FK
+        varchar format
+        text payload
+        varchar status
+        int attempt_count
+        timestamp created_at
+        timestamp updated_at
+    }

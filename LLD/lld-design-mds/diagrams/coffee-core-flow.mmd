@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant U as User
+    participant S as VendingMachineService
+    participant M as VendingMachine
+    participant I as Inventory
+    U->>S: select_drink(espresso)
+    S->>M: select(drink)
+    U->>S: insert_coin(20)
+    S->>M: add_payment(20)
+    M->>I: has_ingredients(recipe)
+    I-->>M: true
+    S->>M: dispense()
+    M->>I: consume(recipe)
+    S-->>U: drink dispensed

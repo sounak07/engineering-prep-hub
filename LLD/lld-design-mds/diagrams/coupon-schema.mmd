@@ -1,0 +1,33 @@
+erDiagram
+    COUPONS ||--o{ COUPON_RULE_MAPPINGS : has
+    RULES ||--o{ COUPON_RULE_MAPPINGS : used_in
+    COUPONS ||--o{ COUPON_REDEMPTIONS : tracked_by
+
+    COUPONS {
+        uuid coupon_id PK
+        varchar code
+        varchar coupon_type
+        json discount_config
+        boolean active
+        timestamp created_at
+    }
+
+    RULES {
+        uuid rule_id PK
+        varchar rule_type
+        json rule_config
+        timestamp created_at
+    }
+
+    COUPON_RULE_MAPPINGS {
+        uuid coupon_id FK
+        uuid rule_id FK
+    }
+
+    COUPON_REDEMPTIONS {
+        uuid id PK
+        uuid coupon_id FK
+        uuid user_id
+        int use_count
+        timestamp last_used_at
+    }

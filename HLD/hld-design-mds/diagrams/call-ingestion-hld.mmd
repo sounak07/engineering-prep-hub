@@ -1,0 +1,72 @@
+flowchart TB
+    subgraph Clients["Clients"]
+        SDK[Contact Center SDK / Client]
+    end
+
+    subgraph Edge["Edge — sync control plane"]
+        IG[Ingestion API — FastAPI<br/>presigned multipart only]
+        SEARCH[Search API<br/>POST /v1/search]
+    end
+
+    subgraph ObjectStore["Object storage + notify"]
+        S3[(S3 — raw audio<br/>tenant/call_id/)]
+        EB[S3 EventBridge / SNS<br/>CompleteMultipartUpload]
+    end
+
+    subgraph Streaming["Kafka"]
+        T0[call.object.ready]
+        T3[call.validated]
+        T6[call.enrichment.ready]
+        T4[call.processing.status]
+        DLQ[call.processing.dlq]
+    end
+
+    subgraph Storage["Metadata SoT"]
+        PG[(Postgres — calls, status)]
+        MONGO[(MongoDB — transcript, enrichment)]
+    end
+
+    subgraph Workers["Async workers — K8s"]
+        UP[Upload Validator]
+        TR[Transcription ASR / GPU]
+        EN[Enrichment NLP]
+        IDX[Indexing Worker]
+    end
+
+    subgraph SearchStore["Search — derived"]
+        ES[(Elasticsearch)]
+        REDIS[(Redis — status cache)]
+    end
+
+    SDK -->|1 POST /calls| IG
+    IG -.->|2 presigned part URLs| SDK
+    SDK -->|3 PUT parts + CompleteMultipart| S3
+    IG --> PG
+
+    S3 --> EB
+    EB -->|4 notify| T0
+
+    T0 --> UP
+    UP --> S3
+    UP --> T3
+    UP --> T4
+    UP --> DLQ
+
+    T3 --> TR
+    TR --> S3
+    TR --> MONGO
+    TR --> EN
+    TR --> T4
+
+    EN --> MONGO
+    EN --> T6
+    EN --> T4
+
+    T6 --> IDX
+    IDX --> ES
+    IDX --> T4
+    IDX --> PG
+
+    T4 --> REDIS
+    SEARCH --> ES
+    SDK -->|POST /search| SEARCH

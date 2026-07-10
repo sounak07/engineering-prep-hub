@@ -1,0 +1,107 @@
+classDiagram
+    direction TB
+    class Database {
+        -dict tables
+        +create_table(name, schema) Table
+        +get_table(name) Table
+        +drop_table(name) void
+    }
+    class Table {
+        -str name
+        -TableSchema schema
+        -RowStore row_store
+        -IndexManager index_manager
+        -RWLock lock
+        +insert(row) int
+        +select(predicate) list
+        +update(predicate, patch) int
+        +delete(predicate) int
+        +create_index(name, columns, type) void
+    }
+    class TableSchema {
+        -list columns
+        +validate_row(row) void
+        +get_column(name) ColumnDef
+    }
+    class ColumnDef {
+        -str name
+        -ColumnType type
+        -bool nullable
+    }
+    class RowStore {
+        -dict rows
+        -int next_row_id
+        +append(row) int
+        +get(row_id) Row
+        +remove(row_id) void
+        +scan_all() list
+    }
+    class Row {
+        -int row_id
+        -dict values
+    }
+    class Value {
+        -ColumnType type
+        -object data
+        +compare(other, op) bool
+    }
+    class ColumnType {
+        <<interface>>
+        +validate(data) bool
+        +coerce(data) Value
+        +compare(a, b, op) bool
+    }
+    class IntType
+    class StringType
+    class FloatType
+    class TypeRegistry {
+        +register(type_name, column_type) void
+        +resolve(type_name) ColumnType
+    }
+    class IndexManager {
+        -dict indexes
+        +create_index(def) Index
+        +find_usable_index(predicate) Index
+        +on_insert(row_id, row) void
+        +on_update(row_id, old_row, new_row) void
+        +on_delete(row_id, row) void
+    }
+    class Index {
+        <<interface>>
+        +supports(predicate) bool
+        +lookup(predicate) set
+        +insert_entry(row_id, row) void
+        +delete_entry(row_id, row) void
+        +update_entry(row_id, old_row, new_row) void
+    }
+    class HashIndex
+    class IndexFactory {
+        +create(type_name, columns) Index
+    }
+    class Predicate {
+        -str column
+        -Operator op
+        -Value value
+        +matches(row) bool
+    }
+    class QueryPlanner {
+        +plan(table, predicate) QueryPlan
+    }
+    Database --> Table
+    Table --> TableSchema
+    Table --> RowStore
+    Table --> IndexManager
+    Table --> RWLock
+    TableSchema --> ColumnDef
+    ColumnDef --> ColumnType
+    ColumnType <|.. IntType
+    ColumnType <|.. StringType
+    ColumnType <|.. FloatType
+    TypeRegistry ..> ColumnType
+    IndexManager --> Index
+    Index <|.. HashIndex
+    IndexFactory ..> Index
+    RowStore --> Row
+    Row --> Value
+    QueryPlanner --> IndexManager
+    Table --> QueryPlanner

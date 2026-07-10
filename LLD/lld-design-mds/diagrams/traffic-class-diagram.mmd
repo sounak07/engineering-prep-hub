@@ -1,0 +1,80 @@
+classDiagram
+    direction TB
+
+    class TrafficController {
+        +start()
+        +tick()
+        +advance_phase()
+        +trigger_emergency(direction)
+        +trigger_pedestrian_crossing()
+        +get_signal_state(direction) SignalColor
+    }
+
+    class Intersection {
+        -dict signals
+        -list phases
+        -int current_phase_index
+        -PhaseSequenceStrategy phase_strategy
+        -bool emergency_active
+        +advance_phase()
+        +apply_phase(phase)
+        +get_active_directions() list
+    }
+
+    class TrafficSignal {
+        -Direction direction
+        -SignalState state
+        -int timer_seconds
+        +tick()
+        +set_state(state, duration)
+        +color() SignalColor
+    }
+
+    class Phase {
+        -list allowed_directions
+        -int duration_seconds
+    }
+
+    class PhaseSequenceStrategy {
+        <<interface>>
+        +phases() list
+    }
+
+    class StandardFourWayStrategy {
+        +phases() list
+    }
+
+    class PedestrianPhaseStrategy {
+        +phases() list
+    }
+
+    class SignalState {
+        <<interface>>
+        +tick(signal) SignalState
+        +color() SignalColor
+    }
+
+    class RedState
+    class YellowState
+    class GreenState
+
+    class SignalColor {
+        <<enumeration>>
+        RED YELLOW GREEN
+    }
+
+    class Direction {
+        <<enumeration>>
+        NORTH SOUTH EAST WEST
+    }
+
+    TrafficController --> Intersection
+    Intersection o-- TrafficSignal
+    Intersection --> Phase
+    Intersection --> PhaseSequenceStrategy
+    PhaseSequenceStrategy <|.. StandardFourWayStrategy
+    PhaseSequenceStrategy <|.. PedestrianPhaseStrategy
+    TrafficSignal --> SignalState
+    SignalState <|.. RedState
+    SignalState <|.. YellowState
+    SignalState <|.. GreenState

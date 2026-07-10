@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant U as User
+    participant MS as MusicService
+    participant P as Player
+    participant PL as Playlist
+    participant SS as SubscriptionService
+
+    U->>MS: play(userId, songId, playlistId)
+    MS->>PL: getSongIds()
+    PL-->>MS: ordered song list
+    MS->>P: build queue from playlist, start songId
+    MS->>P: play(song)
+
+    U->>MS: skip(userId)
+    MS->>SS: canSkip(userId)
+    alt free plan, limit reached
+        SS-->>MS: false
+        MS-->>U: error SKIP_LIMIT_REACHED
+    else allowed
+        SS->>SS: recordSkip(userId)
+        MS->>P: skip()
+        P->>P: pollNext from queue
+        MS-->>U: PlaybackView
+    end

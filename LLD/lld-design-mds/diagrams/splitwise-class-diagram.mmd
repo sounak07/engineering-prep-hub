@@ -1,0 +1,36 @@
+classDiagram
+    direction TB
+    class ExpenseService {
+        +add_expense(group_id, request)
+        +get_balances(group_id)
+        +settle(user_id, to_user_id, amount)
+    }
+    class Group {
+        -str group_id
+        -list members
+        -list expenses
+    }
+    class Expense {
+        -str paid_by
+        -float amount
+        -Split split
+    }
+    class Split {
+        <<interface>>
+        +compute_shares(amount, participants) dict
+    }
+    class EqualSplit
+    class ExactSplit
+    class PercentageSplit
+    class BalanceSheet {
+        +add_debt(from_user, to_user, amount)
+        +get_net_balances() dict
+        +simplify() list
+    }
+    ExpenseService --> Group
+    ExpenseService --> BalanceSheet
+    Group o-- Expense
+    Expense --> Split
+    Split <|.. EqualSplit
+    Split <|.. ExactSplit
+    Split <|.. PercentageSplit
